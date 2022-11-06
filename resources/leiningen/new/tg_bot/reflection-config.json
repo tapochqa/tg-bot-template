@@ -1,6 +1,6 @@
 [
     {
-        "name" : "{{name}}.core",
+        "name" : "{{sanitized}}.core",
         "allPublicConstructors": true,
         "allPublicMethods": true,
         "allDeclaredMethods": true

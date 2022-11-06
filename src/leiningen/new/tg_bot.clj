@@ -15,10 +15,9 @@
                   [".gitignore"                     (render "gitignore" data)]
                   ["project.clj"                    (render "project.clj" data)]
                   ["Makefile"                       (render "Makefile" data)]
-                  ["builds/.keep"                   (render ".keep" data)]
+                  ["builds/.keep"                   (render "keep" data)]
                   ["reflection-config.json"         (render "reflection-config.json")]
                   ["src/{{sanitized}}/core.clj"     (render "src/core.clj" data)]
                   ["src/{{sanitized}}/telegram.clj" (render "src/telegram.clj" data)]
                   ["src/{{sanitized}}/polling.clj"  (render "src/polling.clj" data)]
-                  ["src/{{sanitized}}/handling.clj" (render "src/handling.clj" data)]
-                  )))
+                  ["src/{{sanitized}}/handling.clj" (render "src/handling.clj" data)])))
