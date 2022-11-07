@@ -1,21 +1,53 @@
+lint:
+  clj-kondo --lint src
+
+NAME = tg-bot
+
+NI_TAG = ghcr.io/graalvm/native-image:22.2.0
+
 NI_ARGS = \
-	--initialize-at-build-time \
-	--report-unsupported-elements-at-runtime \
-	--no-fallback \
-	-jar target/default+uberjar/pauk-clj-0.1.0-standalone.jar \
-	-H:IncludeResources='^token$$' \
-	--enable-http \
-	--enable-https \
-	-H:+PrintClassInitialization \
-	-H:ReflectionConfigurationFiles=reflection-config.json \
-	-H:+ReportExceptionStackTraces \
-	-H:Log=registerResource \
-	-H:Name=./builds/tg-bot-
+  --initialize-at-build-time \
+  --report-unsupported-elements-at-runtime \
+  --no-fallback \
+  -jar ${JAR} \
+  -J-Dfile.encoding=UTF-8 \
+  --enable-http \
+  --enable-https \
+  -H:+PrintClassInitialization \
+  -H:+ReportExceptionStackTraces \
+  -H:Log=registerResource \
+  -H:Name=./builds/${NAME}-
 
 
-build-native-macos:
-	sudo native-image ${NI_ARGS}macos
+PLATFORM = PLATFORM
+
+JAR = target/uberjar/${NAME}.jar
+
+DATE=$(shell date +%s)
 
 
-build-native-linux:
-	docker run -it --rm -v ${PWD}:/build -w /build ghcr.io/graalvm/native-image:22.2.0 ${NI_ARGS}$linux
+platform-docker:
+  docker run -it --rm --entrypoint /bin/sh ${NI_TAG} -c 'echo `uname -s`-`uname -m`' > ${PLATFORM}
+
+build-binary-docker: uberjar platform-docker
+  docker run -it --rm -v ${PWD}:/build -w /build ${NI_TAG} ${NI_ARGS}$(shell cat ${PLATFORM})
+
+platform-local:
+  echo `uname -s`-`uname -m` > ${PLATFORM}
+
+graal-build: platform-local
+  native-image ${NI_ARGS}$(shell cat ${PLATFORM})
+
+build-binary-local: uberjar graal-build
+
+
+uberjar:
+  lein uberjar
+
+zip:
+  zip -j target/${NAME}-${DATE}.zip conf/handler.sh builds/blog-backend-Linux-x86_64
+
+bash-package: build-binary-docker zip
+  
+
+
