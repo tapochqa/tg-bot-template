@@ -1,3 +1,3 @@
 #! /bin/bash
 
-./blog-backend-Linux-x86_64
+./tg-bot-Linux-x86_64

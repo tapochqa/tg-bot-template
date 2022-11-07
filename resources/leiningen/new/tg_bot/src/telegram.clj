@@ -266,6 +266,39 @@
                  :cache_time cache-time})))
 
 
+(defn copy-message
+  "https://core.telegram.org/bots/api#copymessage"
+  
+  ([config chat-id from-chat-id message-id]
+   (copy-message config chat-id from-chat-id message-id nil))
+  
+  ([config chat-id from-chat-id message-id {:keys [message-thread-id
+                                                   caption
+                                                   parse-mode
+                                                   caption-entities
+                                                   disable-notification
+                                                   protect-content
+                                                   reply-to-message-id
+                                                   allow-sending-without-reply
+                                                   reply-markup]}]
+   (api-request 
+     config
+     :copyMessage
+     :post
+     {:chat_id chat-id
+      :message_thread_id message-thread-id
+      :from_chat_id from-chat-id
+      :message_id message-id
+      :caption caption
+      :parse_mode parse-mode
+      :caption_entities caption-entities
+      :disable_notification disable-notification
+      :protect_content protect-content
+      :reply_to_message_id reply-to-message-id
+      :allow_sending_without_reply allow-sending-without-reply
+      :reply_markup reply-markup})))
+
+
 ;;
 ;; Dev
 ;;

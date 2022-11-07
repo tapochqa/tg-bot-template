@@ -1,4 +1,5 @@
 (ns {{name}}.core 
+  (:gen-class)
   (:require
     [{{name}}.polling  :as polling]
     [{{name}}.lambda   :as lambda]
@@ -13,7 +14,7 @@
 (defn lambda
   [my-token]
   (-> (lambda/->request)
-      (lambda/handle-request!)
+      (lambda/handle-request! my-token)
       (lambda/response->)))
 
 (defn -main

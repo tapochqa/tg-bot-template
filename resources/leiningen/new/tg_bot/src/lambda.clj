@@ -88,7 +88,7 @@
         message (:message body)]
   
   
-  {:body (handling/the-handler token message)
+  {:body (json/encode (handling/the-handler token message))
    
    :headers headers
    
