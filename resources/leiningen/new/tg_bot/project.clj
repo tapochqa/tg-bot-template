@@ -10,7 +10,6 @@
   :dependencies
   [[org.clojure/clojure "1.11.1"]
    [http-kit            "2.6.0"]
-   [cprop               "0.1.19"]
    [cheshire            "5.10.0"]]
 
   :main ^:skip-aot {{name}}.core
@@ -18,6 +17,8 @@
   :target-path "target/uberjar"
 
   :uberjar-name "{{name}}.jar"
+  
+  :jvm-opts ["-Dfile.encoding=UTF-8"]
 
   :profiles
   {:dev

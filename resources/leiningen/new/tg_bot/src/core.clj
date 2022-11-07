@@ -1,6 +1,5 @@
 (ns {{name}}.core 
   (:require
-    [{{name}}.telegram :as telegram]
     [{{name}}.polling  :as polling]
     [{{name}}.lambda   :as lambda]
     [clojure.string    :as str]

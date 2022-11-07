@@ -2,16 +2,18 @@
 ;; https://cloud.yandex.ru/docs/functions/concepts/function-invoke
 
 (ns {{name}}.lambda
+  
   (:require
    [clojure.java.io :as io]
    [cheshire.core :as json]
    [clojure.string :as str]
    [{{name}}.handling :as handling])
+  
   (:import
    java.io.File
    java.io.InputStream
    java.util.Base64
-   org.apache.commons.codec.binary.Base64InputStream))
+   ))
 
 
 (defn str->bytes
