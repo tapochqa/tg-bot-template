@@ -299,6 +299,17 @@
       :reply_markup reply-markup})))
 
 
+(defn get-file
+  [config file-id]
+  (let [response (api-request config
+                              :getFile
+                              :get
+                              {:file_id file-id})]
+    
+  (conj response
+        {:url (str "https://api.telegram.org/file/bot" (:token config) "/" (:file_path response))})))
+
+
 ;;
 ;; Dev
 ;;
