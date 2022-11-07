@@ -6,8 +6,7 @@ render:
 	lein new tg-bot tb --to-dir target/tb
 
 test:
-	@read -p "Token: " m; \
-	cd target/tb && lein run $$m
+	cd target/tb && lein run 
 
 lint:
 	cd target/tb && clj-kondo --lint src
