@@ -1,7 +1,7 @@
 lint:
 	clj-kondo --lint src
 
-NAME = tg-bot
+NAME = pauk-yf
 
 NI_TAG = ghcr.io/graalvm/native-image:22.2.0
 
@@ -44,9 +44,31 @@ uberjar:
 	lein uberjar
 
 zip:
-	zip -j target/${NAME}-${DATE}.zip conf/handler.sh builds/${NAME}-Linux-x86_64
+	zip -j target/${NAME}.zip conf/handler.sh builds/${NAME}-Linux-x86_64
 
 bash-package: build-binary-docker zip
-	
 
+run-test:
+	lein compile && lein install && lein run $(token)
 
+upload-version:
+	aws --endpoint-url=https://storage.yandexcloud.net/ \
+		s3 cp target/${NAME}.zip s3://lmnd/${NAME}.zip
+
+deploy-version:
+	yc serverless function version create \
+		--function-name=${NAME} \
+		--runtime bash \
+		--entrypoint handler.sh \
+		--memory 128m \
+		--execution-timeout 3s \
+		--environment TELEGRAM_BOT_TOKEN=$(token) \
+		--package-bucket-name lmnd \
+		--package-object-name ${NAME}.zip
+
+deploy: upload-version deploy-version
+
+set-webhook:
+	curl 'https://api.telegram.org/bot$(token)/setWebhook?url=https://functions.yandexcloud.net/$(id)'
+
+all: bash-package deploy

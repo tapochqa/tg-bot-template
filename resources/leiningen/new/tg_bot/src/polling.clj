@@ -2,8 +2,7 @@
   (:require 
     [{{name}}.telegram :as telegram]
     [{{name}}.handling :as handling]
-    [cheshire.core :as json]
-    [clojure.pprint :refer [pprint]]))
+    [cheshire.core :as json]))
 
 
 (defn save-offset [offset-file offset]
@@ -68,7 +67,7 @@
         (when offset
           (save-offset offset-file new-offset))
         (doseq [message updates]
-          (pprint message)
+          (println message)
           (handling/the-handler (:token telegram) (:message message)))
 
         (recur new-offset)))))
