@@ -1,6 +1,6 @@
 (ns {{name}}.handling
   (:require
-    [{{name}}.telegram :as telegram]))
+    [tg-bot-api.telegram :as telegram]))
 
 
 (defn the-handler 

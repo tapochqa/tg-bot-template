@@ -6,7 +6,7 @@ render:
 	lein new tg-bot tb --to-dir target/tb
 
 test:
-	cd target/tb && lein run 
+	cd target/tb && lein run 0
 
 lint:
 	cd target/tb && clj-kondo --lint src

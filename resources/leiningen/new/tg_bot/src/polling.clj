@@ -1,6 +1,6 @@
 (ns {{name}}.polling
   (:require 
-    [{{name}}.telegram :as telegram]
+    [tg-bot-api.telegram :as telegram]
     [{{name}}.handling :as handling]
     [cheshire.core :as json]))
 
@@ -59,10 +59,11 @@
             (or (some-> updates peek :update_id inc)
                 offset)]
 
-        (println "Got %s updates, next offset: %s, updates: %s"
-                    (count updates)
-                    new-offset
-                    (json/generate-string updates {:pretty true}))
+        (println (format
+                   "Got %s updates, next offset: %s, updates: %s"
+                   (count updates)
+                   new-offset
+                   (json/generate-string updates {:pretty true})))
 
         (when offset
           (save-offset offset-file new-offset))
