@@ -8,17 +8,37 @@
 
 
 (defn polling
-  [my-token]
-  (polling/run-polling {:telegram {:token my-token} :polling {:update-timeout 1000}}))
+  [config]
+  (polling/run-polling config))
 
 (defn lambda
-  [my-token]
+  [config]
   (-> (lambda/->request)
-      (lambda/handle-request! my-token)
+      (lambda/handle-request! config)
       (lambda/response->)))
 
 (defn -main
   [my-token]
-  #_(polling/run-polling {:telegram {:token my-token} :polling {:update-timeout 1000}})
-  #_(lambda my-token)
+  
+  (let [config 
+        { :test-server false
+          :token my-token
+          :polling {:update-timeout 1000}
+          }])
+  #_(polling/run-polling config)
+  #_(lambda config)
+  )
+
+
+(comment
+  
+   (binding [*in* (-> "trigger-request.json"
+                 clojure.java.io/resource
+                 clojure.java.io/reader)]
+     
+     (-main "...:..."))
+  
+  
+  (-main "...:...")
+  
   )

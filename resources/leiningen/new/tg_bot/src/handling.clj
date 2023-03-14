@@ -5,8 +5,8 @@
 
 (defn the-handler 
   "Bot logic here"
-  [token message]
+  [config message]
   
-  (telegram/send-message {:token token} (-> message :chat :id) (:text message))
+  (telegram/send-message config (-> message :chat :id) (:text message))
   
 )
