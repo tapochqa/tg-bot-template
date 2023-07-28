@@ -5,7 +5,7 @@
 
 (defn the-handler 
   "Bot logic here"
-  [config message]
+  [config message trigger-id]
   
   (telegram/send-message config (-> message :chat :id) (:text message))
   

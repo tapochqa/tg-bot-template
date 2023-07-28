@@ -10,3 +10,6 @@ test:
 
 lint:
 	cd target/tb && clj-kondo --lint src
+
+deploy:
+	lein deploy clojars

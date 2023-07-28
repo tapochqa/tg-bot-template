@@ -13,7 +13,7 @@
 
 (defn lambda
   [config]
-  (-> (lambda/->request)
+  (-> (lambda/->request config)
       (lambda/handle-request! config)
       (lambda/response->)))
 
@@ -24,10 +24,9 @@
         { :test-server false
           :token my-token
           :polling {:update-timeout 1000}
-          }])
+          }]
   #_(polling/run-polling config)
-  #_(lambda config)
-  )
+  #_(lambda config)))
 
 
 (comment
